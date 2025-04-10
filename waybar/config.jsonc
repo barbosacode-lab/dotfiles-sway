@@ -1,0 +1,145 @@
+{
+    "layer": "top", // Waybar at top layer,
+    "position": "bottom", // Waybar at the bottom of your screen
+    "height": 46, // Waybar height,
+    // "width": 1366, // Waybar width
+    // Choose the order of the modules
+    "modules-left": ["sway/workspaces","group/launcher", "custom/update"],
+    "modules-center": ["sway/window","sway/mode"],
+    "modules-right": ["privacy", "pulseaudio","disk","cpu", "memory", "battery","clock"],
+    "sway/workspaces": {
+        "output": "HDMI-A-3",
+	    "format": "{name}",
+        "all-outputs": false,
+	    "disable-scroll": true
+},
+    "tray": {
+        "icon-size": 16
+    },
+    "clock": {
+        "interval": 60,
+        "format": "{:%A, %B %d, %Y (%R)}", //"format": "{:%H:%M}",
+        "max-length": 45,
+        "on-click": "gnome-calendar",
+        "tooltip": false
+        },
+    "cpu": {
+        "format": "{usage}% "
+    },
+    "memory": {
+        "format": "{}% "
+    },
+    "battery": {
+        "bat": "BAT0",
+        "states": {
+             "good": 95,
+            "warning": 91,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "network": {
+        //"interface": "wlp2s0", // (Optional) To force the use of this interface
+        "format-wifi": "{essid} ({signalStrength}%)",
+        "format": "",
+        "on-click": "nm-applet",
+        "format-disconnected": "Disconnected ⚠",
+        "format-ethernet": "{ipaddr}/{cidr}",
+        "tooltip-format-wifi":"{ipaddr}/{cidr}"
+    },
+    "pulseaudio": {
+        //"scroll-step": 1,
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },  
+        "on-click": "pavucontrol"
+    },
+"disk": {
+    "interval": 30,
+    "icon-size": 15,
+    "format": "\uf0c7 {percentage_free}% remaining on {path}",
+    "path": "/"
+},
+
+"sway/window": {
+    "icon": true,
+    "show-focused-workspace-name":true,
+    "max-length": 50,
+    "format": {},
+    "rewrite": {
+         "":"Fedora Linux"
+       }
+},
+
+"bluetooth": {
+    "format": "",
+    "on-click": "blueman-manager"
+},
+
+"custom/cups": {
+    "on-click": "~/.config/waybar/scripts/cups-tray.sh",
+    "tooltip": false,
+    "format": "󰐪"
+},
+  //  Group Launchers
+  "group/launcher": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "not-power,",
+      "transition-left-to-right": true,
+      "click-to-reveal": false
+    },
+    "modules": [
+      "custom/launcher",
+      "tray",
+      "custom/cups",
+      "bluetooth",
+      "network"
+    ]
+  },
+  "custom/launcher": {
+    "format": "󰮤",
+    "tooltip": false
+  },
+  "privacy": {
+	"icon-spacing": 4,
+	"icon-size": 18,
+	"transition-duration": 250,
+	"modules": [
+		{
+			"type": "screenshare",
+			"tooltip": true,
+			"tooltip-icon-size": 24
+		},
+		{
+			"type": "audio-out",
+			"tooltip": true,
+			"tooltip-icon-size": 24
+		},
+		{
+			"type": "audio-in",
+			"tooltip": true,
+			"tooltip-icon-size": 24
+		}
+	]
+},
+"custom/update": {
+    "exec": "~/.config/waybar/scripts/updates-count.sh",
+    "interval": 600,
+    "return-type": "text",
+    "on-click": "$TERM -e sudo dnf upgrade"
+  }
+}

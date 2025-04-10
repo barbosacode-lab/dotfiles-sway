@@ -1,0 +1,140 @@
+@keyframes blink {
+    0% {
+      opacity: 1;  /* fully visible */
+    }
+    50% {
+      opacity: 0;  /* invisible */
+    }
+    100% {
+      opacity: 1;  /* fully visible again */
+    }
+  }
+
+* {
+    font-family: "FiraCodeNerdFont-Light";
+    font-size: 14px;
+    min-height: 0px;
+}
+
+#mode {
+    background-color: red;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#tray {
+    padding: 3px;
+}
+
+window#waybar.tiled #window {
+    color: #ffffff;
+    background: transparent;
+    border-radius: 5px;
+    padding: 10px;
+}
+window#waybar {
+    background: transparent;
+    background-color: rgba(0, 0, 0, 0.712);
+    border-radius: 5px;
+}
+
+
+window#waybar.tiled #window:hover {
+    border: 1px solid #47e4c2;
+}
+
+window#waybar.empty #window {
+    color: #ffffff;
+    border: 3px solid #47e4c2;
+    animation: blink 2s infinite;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px 10px;
+}
+
+#workspaces button {
+    background: none;
+    color: white;
+    padding: 0px 5px;
+}
+
+
+#workspaces button:hover{
+    border: 1px solid #47e4c2;
+}
+
+#workspaces button.focused {
+    color: #ffffff;
+    background-color: #294172;
+}
+
+#disk #clock, #battery, #cpu, #memory, #network, #pulseaudio {
+    padding: 0px 10px;
+    margin: 0px 2px;
+    color: #ffffff;
+    padding-left: 4px;
+    border-right: 1px solid #47e4c2;
+}
+
+#cpu {
+    border-left: 1px solid #47e4c2;
+}
+
+#clock {
+    background-color: #47e4c2;
+    color: #ffffff;
+    background: transparent;
+    font-family: "MesloLGSDZNerdFont-Bold";
+}
+
+#network {
+   border-right: none;
+}
+
+
+#battery.warning:not(.charging) {
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#network.disconnected {
+    background: #ffffff;
+    color: #030303;
+}
+
+#custom-launcher {
+    font-size: 22px;
+    padding-right: 7px;
+    color: #ffffff;
+}
+
+#custom-launcher:hover {
+    color: #51a2da; /* Fedora Oficial Color (New Fedora Blue) */
+}
+ 
+
+box#launcher{
+    border-radius: 5px;
+    background-color: #294172; /* Fedora Oficial Color (Dark Fedora Blue) */
+    color: rgb(220, 221, 221);
+    padding: 0px 5px;
+}
+
+box#launcher:hover {
+    border: 1px solid #47e4c2;
+}
+
+#custom-cups {
+    font-size: 18px;
+    padding: 10px;
+}
+
+#custom-update {
+  color: #47e4c2;
+  padding: 0 10px;
+  border-radius: 4px;
+}
