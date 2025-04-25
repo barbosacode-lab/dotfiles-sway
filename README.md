@@ -2,7 +2,7 @@
 
 > Configurações pessoais para um ambiente Wayland elegante, minimalista e otimizado para produtividade no Fedora Linux.
 
-Este repositório contém meus **dotfiles** para uso com o **Sway**, um gerenciador de janelas baseado em mosaico (tiling) para **Wayland**, além de configurações para **Waybar**, **Swaylock**, scripts personalizados e outras ferramentas essenciais no meu fluxo de trabalho.
+Esse repositório contém meus **dotfiles** para uso com o **Sway**, um gerenciador de janelas baseado em mosaico (tiling) para **Wayland**, além de configurações para **Waybar**, **Swaylock**, scripts personalizados e outras ferramentas essenciais no meu fluxo de trabalho.
 
 Criado com foco em **minimalismo**, **produtividade** e uma experiência DevOps fluida em ambientes Linux e em nuvem.  
 
@@ -19,7 +19,7 @@ Veja abaixo um GIF demonstrando o ambiente em uso, alternando entre janelas, ati
 ## ✅ Pré-requisitos
 
 🖥️ **Distribuição suportada:** Fedora Linux  
-⚠️ Este setup foi testado apenas no **Fedora**. Você pode adaptá-lo para outras distribuições com base nas configurações e scripts fornecidos.
+⚠️ Esse setup foi testado apenas no **Fedora Workstation 42**. Você pode adaptá-lo para outras distribuições com base nas configurações e scripts fornecidos.
 
 ### 🔧 Ferramentas necessárias
 
@@ -40,6 +40,7 @@ dotfiles/
 │   └── scripts/           → Scripts personalizados
 ├── media/                
 │   └── workflow-fedora-sway.gif
+│   └── qrcode-pix.jpg
 ├── wallpapers/            → Imagens de fundo (default.jpg)
 ├── install.sh             → Script principal de instalação
 ```
@@ -115,7 +116,7 @@ wlr-randr --output HDMI-A-3 --mode 1920x1080@144
 Certifique-se de que o Sway esteja listado como opção de sessão no GDM, LightDM ou SDDM.
 
 ### 🔸 Waybar não aparece ou falha?
-Reinicie o Sway (`Mod+Shift+c`) ou verifique erros no terminal com:
+Reinicie o Sway (`Mod+Shift+c`) ou verifique erros em:
 
 ```bash
 ~/.config/waybar/config.jsonc
@@ -137,11 +138,13 @@ Reinicie o Sway (`Mod+Shift+c`) ou verifique erros no terminal com:
 
 Se você tem ideias para melhorar este setup, encontrou bugs ou deseja expandi-lo para outras distros, sinta-se em casa. O projeto é aberto a contribuições!
 
-Se este setup te ajudou, considere apoiar me pagar um café ☕ para que eu possa continuar criando e compartilhando conteúdos livres e abertos!
+Se este setup te ajudou, considere apoiar me pagando um café ☕ para que eu possa continuar criando e compartilhando conteúdos livres e abertos!
 
 Caso você prefira usar o **PIX** para ajudar, você pode realizar uma doação diretamente para a chave abaixo ou usar o QR Code:
 
-**🔑 Chave PIX(aleatória)**: `2e55728f-eeb6-4ea3-9d8b-24f09e95ce62`
+**🔑 Chave PIX (aleatória)**: `2e55728f-eeb6-4ea3-9d8b-24f09e95ce62`
+
+<img src="media/qrcode-pix.png" style="width:150px;">
 
 ---  
 
