@@ -22,12 +22,12 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-tags: true
 
-      - name: Buscar branch base (main)
-        run: git fetch origin main
+      - name: Buscar o histórico completo de todas as branches
+        run: git fetch --all
 
       - name: Verificar mensagens de commit
         run: |
-          commits=$(git log origin/main..HEAD --pretty=format:"%s")
+          commits=$(git log origin/main..${{ github.head_ref }} --pretty=format:"%s")
           echo "$commits" | while read line; do
             if ! echo "$line" | grep -Eq "^(feat|fix|chore|docs|style|refactor|perf|test)(\(.+\))?: .+"; then
               echo "::error file=COMMIT_MESSAGE::❌ Commit inválido: '$line'"
@@ -67,8 +67,12 @@ jobs:
       - name: Commit do changelog
         run: |
           git add CHANGELOG.md
-          git commit -m "docs(changelog): atualiza changelog para ${{ github.ref_name }}" || echo "Sem alterações no changelog"
-          git push origin HEAD:${{ github.ref_name }}
+          if ! git diff --cached --quiet; then
+            git commit -m "docs(changelog): atualiza changelog para ${{ github.ref_name }}"
+            git push origin HEAD:${{ github.ref_name }}
+          else
+            echo "Sem alterações no changelog"
+          fi
 
       - name: Criar release no GitHub
         uses: softprops/action-gh-release@v1
@@ -76,3 +80,5 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
