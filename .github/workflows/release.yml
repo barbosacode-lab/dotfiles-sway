@@ -1,0 +1,84 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Executa o release apenas com push de tags versionadas (ex: v1.0.0)
+  pull_request:
+    branches:
+      - main  # Valida commits nos PRs direcionados para a branch main
+
+jobs:
+  validate-commits:
+    name: Validação de Commits
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'  # Só roda para PRs
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          fetch-tags: true
+
+      - name: Buscar o histórico completo de todas as branches
+        run: git fetch --all
+
+      - name: Verificar mensagens de commit
+        run: |
+          commits=$(git log origin/main..${{ github.head_ref }} --pretty=format:"%s")
+          echo "$commits" | while read line; do
+            if ! echo "$line" | grep -Eq "^(feat|fix|chore|docs|style|refactor|perf|test)(\(.+\))?: .+"; then
+              echo "::error file=COMMIT_MESSAGE::❌ Commit inválido: '$line'"
+              echo ""
+              echo "🔧 Use o padrão: <tipo>(escopo opcional): descrição breve"
+              echo "Exemplos válidos:"
+              echo " - feat(login): adiciona autenticação"
+              echo " - fix(api): corrige retorno de erro 500"
+              exit 1
+            fi
+          done
+          echo "✅ Todos os commits estão válidos."
+
+  release:
+    name: Gerar Release
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Configurar Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Instalar Conventional Changelog CLI
+        run: npm install -g conventional-changelog-cli
+
+      - name: Gerar changelog
+        run: conventional-changelog -p angular -i CHANGELOG.md -s
+
+      - name: Commit do changelog
+        run: |
+          git add CHANGELOG.md
+          if ! git diff --cached --quiet; then
+            git commit -m "docs(changelog): atualiza changelog para ${{ github.ref_name }}"
+            git push origin HEAD:${{ github.ref_name }}
+          else
+            echo "Sem alterações no changelog"
+          fi
+
+      - name: Criar release no GitHub
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
