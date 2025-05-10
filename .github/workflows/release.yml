@@ -78,10 +78,11 @@ jobs:
 
       - name: Criar branch de changelog
         run: |
+          git push origin chore/changelog-${{ github.ref_name }}
           git add CHANGELOG.md
           git commit -m "chore: gerar changelog para v${{ github.ref_name }}"
           git switch -c chore/changelog-${{ github.ref_name }}
-          git push origin chore/changelog-${{ github.ref_name }}
+
       - name: Criar Pull Request com o changelog
         uses: peter-evans/create-pull-request@v6
         with:
