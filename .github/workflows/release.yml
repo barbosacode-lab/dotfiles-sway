@@ -58,6 +58,14 @@ jobs:
       - name: Instalar auto-changelog
         run: | 
           npm install -g auto-changelog 
+
+      - name: Exibir o SHA anterior
+        run: |
+          if [ -z "${{ github.event.before }}" ]; then
+            echo "SHA anterior não disponível"
+          else
+            echo "SHA anterior: ${{ github.event.before }}"
+          fi        
       - name: Gerar Changelog
         run: |
           npx auto-changelog --starting-version ${{ github.event.before }} --commit-limit false
