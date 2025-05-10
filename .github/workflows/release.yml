@@ -82,12 +82,13 @@ jobs:
           git commit -m "chore: gerar changelog para v${{ github.ref_name }}"
           git push origin HEAD:chore/changelog-${{ github.ref_name }}
         
-      - name: Criar Pull Request do changelog
-        uses: peter-evans/create-pull-request@v3
+
+      - name: Criar Pull Request com o changelog
+        uses: peter-evans/create-pull-request@v6
         with:
-          title: "Gerar changelog para v${{ github.ref_name }}"
-          body: "Este PR contém o changelog gerado automaticamente para a versão `${{ github.ref_name }}`."
-          base: test/release
           branch: chore/changelog-${{ github.ref_name }}
-          commit-message: "chore: gerar changelog para v${{ github.ref_name }}"
+          commit-message: 'chore: gerar changelog para ${{ github.ref_name }}'
+          title: 'chore: changelog para ${{ github.ref_name }}'
+          body: 'Este PR inclui o changelog gerado automaticamente para `${{ github.ref_name }}`.'
+          labels: changelog
         
