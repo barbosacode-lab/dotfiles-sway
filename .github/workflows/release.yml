@@ -45,6 +45,8 @@ jobs:
     name: Gerar Changelog
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
+    permissions: 
+      contents: write
 
     steps:
       - name: Verificar código
@@ -74,18 +76,18 @@ jobs:
             npx auto-changelog --starting-version ${{ steps.previous_tag.outputs.tag }} --commit-limit false
           fi
 
-        
-        
       - name: Adicionar e Commitar o changelog
         run: |
           git add CHANGELOG.md  
           git commit -m "chore: gerar changelog para v${{ github.ref_name }}"
           git push origin HEAD:chore/changelog-${{ github.ref_name }}
         
-      - name: Criar Pull Request de Changelog
+      - name: Criar Pull Request do changelog
         uses: peter-evans/create-pull-request@v3
         with:
           title: "Gerar changelog para v${{ github.ref_name }}"
-          body: "Este pull request contém o changelog gerado automaticamente para a versão ${github.ref_name}."
-          base: test/conventional-commits  # A branch de base é configurada para a branch de teste em vez da main, para evitar afetar diretamente a principal.
-          branch: chore/changelog-${{ github.ref_name }}  # A branch de origem do PR é a branch onde o changelog foi gerado e commitado.
+          body: "Este PR contém o changelog gerado automaticamente para a versão `${{ github.ref_name }}`."
+          base: test/release
+          branch: chore/changelog-${{ github.ref_name }}
+          commit-message: "chore: gerar changelog para v${{ github.ref_name }}"
+        
