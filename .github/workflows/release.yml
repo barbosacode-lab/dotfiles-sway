@@ -85,9 +85,9 @@ jobs:
 
       - name: Criar branch de changelog
         run: |
+          git checkout -b chore/changelog-${{ github.ref_name }}
           git add CHANGELOG.md
           git commit -m "chore: gerar changelog para ${{ github.ref_name }}"
-          git checkout -b chore/changelog-${{ github.ref_name }}
           git push origin chore/changelog-${{ github.ref_name }}
 
       - name: Criar Pull Request com o changelog
