@@ -76,13 +76,6 @@ jobs:
             npx auto-changelog --starting-version ${{ steps.previous_tag.outputs.tag }} --commit-limit false
           fi
 
-      - name: Adicionar e Commitar o changelog
-        run: |
-          git add CHANGELOG.md  
-          git commit -m "chore: gerar changelog para v${{ github.ref_name }}"
-          git push origin HEAD:chore/changelog-${{ github.ref_name }}
-        
-
       - name: Criar Pull Request com o changelog
         uses: peter-evans/create-pull-request@v6
         with:
