@@ -44,6 +44,7 @@ jobs:
   changelog:
     name: Gerar Changelog
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
 
     steps:
       - name: Verificar código
