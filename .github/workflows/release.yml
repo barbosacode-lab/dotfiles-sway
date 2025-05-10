@@ -54,10 +54,13 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-
+      
+      - name: Instalar auto-changelog
+        run: | 
+          npm install -g auto-changelog 
       - name: Gerar Changelog
         run: |
-          npx auto-changelog --verbose --starting-version ${{ github.event.before }} --commit-limit false
+          npx auto-changelog --starting-version ${{ github.event.before }} --commit-limit false
           # Usa o auto-changelog para gerar o changelog. A variável `github.event.before` é o SHA do commit anterior à tag,
           # portanto, ele pega as alterações realizadas desde a última tag para gerar o changelog.
         
