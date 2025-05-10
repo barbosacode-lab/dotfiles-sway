@@ -72,5 +72,5 @@ jobs:
         with:
           title: "Gerar changelog para v${{ github.ref_name }}"
           body: "Este pull request contém o changelog gerado automaticamente para a versão ${github.ref_name}."
-          base: test/release  # A branch de base é configurada para a branch de teste em vez da main, para evitar afetar diretamente a principal.
+          base: test/conventional-commits  # A branch de base é configurada para a branch de teste em vez da main, para evitar afetar diretamente a principal.
           branch: chore/changelog-${{ github.ref_name }}  # A branch de origem do PR é a branch onde o changelog foi gerado e commitado.
