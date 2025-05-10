@@ -76,6 +76,13 @@ jobs:
             npx auto-changelog --starting-version ${{ steps.previous_tag.outputs.tag }} --commit-limit false
           fi
 
+      - name: Verificar conteúdo do diretório após gerar changelog
+        run: |
+          echo "Conteúdo da pasta após geração:"
+          ls -lah
+          echo "Conteúdo do CHANGELOG.md:"
+          cat CHANGELOG.md || echo "❌ CHANGELOG.md não encontrado!"
+
       - name: Criar branch de changelog
         run: |
           git checkout -b chore/changelog-${{ github.ref_name }}
