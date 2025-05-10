@@ -80,6 +80,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           branch: chore/changelog-${{ github.ref_name }}
+          base: test/conventional-commits
           commit-message: 'chore: gerar changelog para ${{ github.ref_name }}'
           title: 'chore: changelog para ${{ github.ref_name }}'
           body: 'Este PR inclui o changelog gerado automaticamente para `${{ github.ref_name }}`.'
