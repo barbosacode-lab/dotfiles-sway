@@ -70,10 +70,10 @@ jobs:
         run: |
           if [ -z "${{ steps.previous_tag.outputs.tag }}" ]; then
             echo "🔄 Nenhuma tag anterior encontrada. Gerando changelog completo..."
-            npx auto-changelog --commit-limit false
+            npx auto-changelog --commit-limit false --output CHANGELOG.md --package false
           else
             echo "🔄 Gerando changelog desde a tag: ${{ steps.previous_tag.outputs.tag }}"
-            npx auto-changelog --starting-version ${{ steps.previous_tag.outputs.tag }} --commit-limit false
+            npx auto-changelog --starting-version ${{ steps.previous_tag.outputs.tag }} --commit-limit false --output CHANGELOG.MD --package false
           fi
 
       - name: Criar branch de changelog
