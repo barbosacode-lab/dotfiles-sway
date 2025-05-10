@@ -59,18 +59,22 @@ jobs:
         run: | 
           npm install -g auto-changelog 
 
-      - name: Exibir o SHA anterior
+      - name: Descobrir tag anterior
+        id: previous_tag
         run: |
-          if [ -z "${{ github.event.before }}" ]; then
-            echo "SHA anterior não disponível"
-          else
-            echo "SHA anterior: ${{ github.event.before }}"
-          fi        
+          tag=$(git describe --tags --abbrev=0 HEAD^ || echo "")
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
       - name: Gerar Changelog
         run: |
-          npx auto-changelog --starting-version ${{ github.event.before }} --commit-limit false
-          # Usa o auto-changelog para gerar o changelog. A variável `github.event.before` é o SHA do commit anterior à tag,
-          # portanto, ele pega as alterações realizadas desde a última tag para gerar o changelog.
+          if [ -z "${{ steps.previous_tag.outputs.tag }}" ]; then
+            echo "🔄 Nenhuma tag anterior encontrada. Gerando changelog completo..."
+            npx auto-changelog --commit-limit false
+          else
+            echo "🔄 Gerando changelog desde a tag: ${{ steps.previous_tag.outputs.tag }}"
+            npx auto-changelog --starting-version ${{ steps.previous_tag.outputs.tag }} --commit-limit false
+          fi
+
+        
         
       - name: Adicionar e Commitar o changelog
         run: |
