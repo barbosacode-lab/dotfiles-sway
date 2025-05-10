@@ -76,6 +76,9 @@ jobs:
             npx auto-changelog --starting-version ${{ steps.previous_tag.outputs.tag }} --commit-limit false
           fi
 
+      - name: Criar branch de changelog
+        run: |
+          git switch -c chore/changelog-${{ github.ref_name }}
       - name: Criar Pull Request com o changelog
         uses: peter-evans/create-pull-request@v6
         with:
